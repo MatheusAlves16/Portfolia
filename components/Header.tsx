@@ -29,13 +29,13 @@ export default function Header() {
           </button>
 
           <nav className="hidden md:flex gap-6">
-            {['Sobre', 'Conhecimentos', 'Projetos', 'Formação', 'Contato'].map((item) => (
+            {[{nome:'Sobre', id:'sobre'}, {nome:'Conhecimentos', id:'conhecimentos'}, {nome:'Projetos', id:'projetos'}, {nome:'Formação', id:'formacao'}, {nome:'Contato', id:'contato'} ].map((item) => (
               <button
-                key={item}
-                onClick={() => scrollToSection(item.toLowerCase())}
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
                 className="ff6-button px-4 py-2 text-sm"
               >
-                {item}
+                {item.nome}
               </button>
             ))}
           </nav>
