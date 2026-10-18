@@ -13,13 +13,20 @@ export default function Header() {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a2e] border-b-4 border-[#ffd700] shadow-lg">
       <div className="max-w-6xl mx-auto px-4 py-4">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-[#ffd700] pixel-text tracking-wider">
+          <button
+            onClick={scrollToTop}
+            className="text-2xl font-bold text-[#ffd700] pixel-text tracking-wider hover:text-white transition-colors"
+          >
             MATHEUS A. GOMES
-          </h1>
+          </button>
           
           <button
             className="md:hidden ff6-button px-4 py-2"
