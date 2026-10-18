@@ -1,26 +1,113 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --ff6-bg-dark: #1a1a2e;
+  --ff6-bg-panel: #16213e;
+  --ff6-bg-light: #0f3460;
+  --ff6-gold: #ffd700;
+  --ff6-blue: #4cc9f0;
+  --ff6-pink: #f72585;
+  --ff6-white: #e8e8e8;
+  --ff6-border: #ffd700;
+  --background: #0d0d0d;
+  --foreground: #e8e8e8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-ff6-bg-dark: var(--ff6-bg-dark);
+  --color-ff6-bg-panel: var(--ff6-bg-panel);
+  --color-ff6-bg-light: var(--ff6-bg-light);
+  --color-ff6-gold: var(--ff6-gold);
+  --color-ff6-blue: var(--ff6-blue);
+  --color-ff6-pink: var(--ff6-pink);
+  --color-ff6-white: var(--ff6-white);
+  --color-ff6-border: var(--ff6-border);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), 'Courier New', monospace;
+  image-rendering: pixelated;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.ff6-border {
+  border: 3px solid var(--ff6-border);
+  box-shadow: 
+    0 0 0 1px #000,
+    inset 0 0 0 1px #000,
+    4px 4px 0 0 #000;
+}
+
+.ff6-panel {
+  background: linear-gradient(180deg, var(--ff6-bg-panel) 0%, var(--ff6-bg-dark) 100%);
+  border: 3px solid var(--ff6-border);
+  box-shadow: 
+    0 0 0 1px #000,
+    inset 0 0 0 1px #000,
+    4px 4px 0 0 #000;
+}
+
+.ff6-button {
+  background: linear-gradient(180deg, var(--ff6-bg-light) 0%, var(--ff6-bg-panel) 100%);
+  border: 3px solid var(--ff6-gold);
+  color: var(--ff6-white);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  box-shadow: 
+    0 0 0 1px #000,
+    inset 0 0 0 1px #000,
+    3px 3px 0 0 #000;
+  transition: all 0.1s;
+}
+
+.ff6-button:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 
+    0 0 0 1px #000,
+    inset 0 0 0 1px #000,
+    1px 1px 0 0 #000;
+}
+
+.ff6-title {
+  color: var(--ff6-gold);
+  text-shadow: 
+    2px 2px 0 #000,
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000;
+  letter-spacing: 3px;
+}
+
+.ff6-glow {
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 
+      0 0 5px var(--ff6-gold),
+      0 0 10px var(--ff6-gold),
+      0 0 15px var(--ff6-gold);
+  }
+  to {
+    text-shadow: 
+      0 0 10px var(--ff6-gold),
+      0 0 20px var(--ff6-gold),
+      0 0 30px var(--ff6-gold);
+  }
+}
+
+.pixel-text {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
 }
