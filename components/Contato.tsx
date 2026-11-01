@@ -8,11 +8,39 @@ export default function Contato() {
     email: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert('Mensagem enviada com sucesso! (Simulação)');
-    setFormData({ name: '', email: '', message: '' });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const formId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID;
+      if (!formId) {
+        throw new Error('Formspree Form ID não configurado');
+      }
+
+      const response = await fetch(`https://formspree.io/f/${formId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -43,7 +71,7 @@ export default function Contato() {
             <div className="space-y-4">
               <div className="bg-[#0f3460] p-4 border-2 border-[#ffd700]">
                 <p className="text-[#ffd700] pixel-text text-sm mb-1">EMAIL</p>
-                <p className="text-[#e8e8e8] pixel-text">matheus.alves@email.com</p>
+                <p className="text-[#e8e8e8] pixel-text">mathalves1616@gmail.com</p>
               </div>
               
               <div className="bg-[#0f3460] p-4 border-2 border-[#ffd700]">
@@ -54,6 +82,16 @@ export default function Contato() {
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {submitStatus === 'success' && (
+              <div className="bg-green-900 border-2 border-green-500 p-4 text-green-300 pixel-text">
+                Mensagem enviada com sucesso!
+              </div>
+            )}
+            {submitStatus === 'error' && (
+              <div className="bg-red-900 border-2 border-red-500 p-4 text-red-300 pixel-text">
+                Erro ao enviar mensagem. Tente novamente.
+              </div>
+            )}
             <div>
               <label className="block text-[#ffd700] pixel-text text-sm mb-2">
                 NOME
@@ -101,9 +139,10 @@ export default function Contato() {
             
             <button
               type="submit"
-              className="w-full ff6-button px-6 py-3 text-lg"
+              disabled={isSubmitting}
+              className="w-full ff6-button px-6 py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              ENVIAR MENSAGEM
+              {isSubmitting ? 'ENVIANDO...' : 'ENVIAR MENSAGEM'}
             </button>
           </form>
         </div>
